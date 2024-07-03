@@ -59,7 +59,7 @@
     - 获取方法: 在 Telegram 中使用 `@BotFather` 创建 Bot 并获取 API Token。
 
 - **TELEGRAM_CHAT_ID**
-    - 示例值: `-123456789`
+    - 示例值: `1234567890`
     - 获取方法: 发送一条消息给你的 Bot，然后访问 `https://api.telegram.org/bot<your_bot_token>/getUpdates` 获取 Chat ID。
 
 - **ACCOUNTS_JSON**
