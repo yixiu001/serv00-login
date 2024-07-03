@@ -1,3 +1,11 @@
+## serv00自动化批量保号，每3天自动登录一次面板，并且发送消息到Telegram
+
+利用github Action以及python脚本实现
+
+🙏🙏🙏点个Star！！Star！！Star！！
+
+交流群：https://t.me/yxjsjl
+
 ### 将代码fork到你的仓库并运行的操作步骤
 
 #### 1. Fork 仓库
@@ -19,9 +27,10 @@
     - 点击 `Settings`，然后在左侧菜单中选择 `Secrets`。
     - 添加以下 Secrets：
         - `ACCOUNTS_JSON`: 包含账号信息的 JSON 数据。例如：
+        - 
           ```json
           [
-            {"username": "user1", "password": "password1", "panelnum": 1},
+            {"username": "serv00的账号", "password": "serv00的密码", "panelnum": "服务器号，比如s6.serv00.com的就是6"},
             {"username": "user2", "password": "password2", "panelnum": 2}
           ]
           ```
@@ -56,7 +65,7 @@
     - 示例值:
       ```json
       [
-        {"username": "user1", "password": "password1", "panelnum": 1},
+        {"username": "serv00的账号", "password": "serv00的密码", "panelnum": "服务器号，比如s6.serv00.com的就是6"},
         {"username": "user2", "password": "password2", "panelnum": 2}
       ]
       ```
