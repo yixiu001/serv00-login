@@ -66,6 +66,7 @@ async def login(username, password, panelnum):
 async def main():
     async with aiofiles.open('accounts.json', mode='r', encoding='utf-8') as f:
         accounts_json = await f.read()
+        print(accounts_json)
     accounts = json.loads(accounts_json)
 
     for account in accounts:
