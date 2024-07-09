@@ -1,4 +1,4 @@
-## serv00自动化批量保号，每3天自动登录一次面板，并且发送消息到Telegram
+## serv00与ct8自动化批量保号，每3天自动登录一次面板，并且发送消息到Telegram
 
 利用github Action以及python脚本实现
 
@@ -31,8 +31,9 @@
         - 
           ```json
           [
-            {"username": "serv00的账号", "password": "serv00的密码", "panelnum": "服务器号，比如s6.serv00.com的就是6"},
-            {"username": "user2", "password": "password2", "panelnum": 2}
+            {"username": "serv00的账号", "password": "serv00的密码", "panel": "s6.serv00.com"},
+            {"username": "ct8的账号", "password": "ct8的密码", "panel": "panel.ct8.pl"},
+            {"username": "user2", "password": "password2", "panel": 2}
           ]
           ```
         - `TELEGRAM_BOT_TOKEN`: 你的 Telegram Bot 的 API Token。
