@@ -20,17 +20,20 @@ async def delay_time(ms):
 # 全局浏览器实例
 browser = None
 
-async def login(username, password, panelnum):
+async def login(username, password, panel):
     global browser
 
     page = None  # 确保 page 在任何情况下都被定义
-
+    serviceName = 'serv00'
+    if (panel.includes('ct8')) {
+        serviceName = 'ct8';
+    }
     try:
         if not browser:
             browser = await launch(headless=True, args=['--no-sandbox', '--disable-setuid-sandbox'])
 
         page = await browser.newPage()
-        url = f'https://panel{panelnum}.serv00.com/login/?next=/'
+        url = f'https://{panel}/login/?next=/'
         await page.goto(url)
 
         username_input = await page.querySelector('#id_username')
@@ -56,7 +59,8 @@ async def login(username, password, panelnum):
         return is_logged_in
 
     except Exception as e:
-        print(f'serv00账号 {username} 登录时出现错误: {e}')
+        print(f'{serviceName}账号 {username} 登录时出现错误: {e}')
+        
         return False
 
     finally:
@@ -71,23 +75,24 @@ async def main():
     for account in accounts:
         username = account['username']
         password = account['password']
-        panelnum = account['panelnum']
+        panel = account['panel']
 
-        is_logged_in = await login(username, password, panelnum)
+        is_logged_in = await login(username, password, panel)
 
         if is_logged_in:
             now_utc = format_to_iso(datetime.utcnow())
             now_beijing = format_to_iso(datetime.utcnow() + timedelta(hours=8))
-            success_message = f'serv00账号 {username} 于北京时间 {now_beijing}（UTC时间 {now_utc}）登录成功！'
+            success_message = f'{serviceName}账号 {username} 于北京时间 {now_beijing}（UTC时间 {now_utc}）登录成功！'
+
             print(success_message)
             send_telegram_message(success_message)
         else:
-            print(f'serv00账号 {username} 登录失败，请检查serv00账号和密码是否正确。')
+            print(f'{serviceName}账号 {username} 登录失败，请检查{serviceName}账号和密码是否正确。')
 
         delay = random.randint(1000, 8000)
         await delay_time(delay)
 
-    print('所有serv00账号登录完成！')
+    print('所有{serviceName}账号登录完成！')
 
 # 发送Telegram消息
 def send_telegram_message(message):
