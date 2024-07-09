@@ -31,9 +31,9 @@
         - 
           ```json
           [
-            {"username": "serv00的账号", "password": "serv00的密码", "panel": "s6.serv00.com"},
+            {"username": "serv00的账号", "password": "serv00的密码", "panel": "panel6.serv00.com"},
             {"username": "ct8的账号", "password": "ct8的密码", "panel": "panel.ct8.pl"},
-            {"username": "user2", "password": "password2", "panel": 2}
+            {"username": "user2", "password": "password2", "panel": "panel6.serv00.com"}
           ]
           ```
         - `TELEGRAM_BOT_TOKEN`: 你的 Telegram Bot 的 API Token。
@@ -67,10 +67,10 @@
     - 示例值:
       ```json
       [
-          {"username": "serv00的账号", "password": "serv00的密码", "panel": "s6.serv00.com"},
-          {"username": "ct8的账号", "password": "ct8的密码", "panel": "panel.ct8.pl"},
-          {"username": "user2", "password": "password2", "panel": "panel.ct8.pl"}
-      ]
+            {"username": "serv00的账号", "password": "serv00的密码", "panel": "panel6.serv00.com"},
+            {"username": "ct8的账号", "password": "ct8的密码", "panel": "panel.ct8.pl"},
+            {"username": "user2", "password": "password2", "panel": "panel6.serv00.com"}
+          ]
       ```
     - 获取方法: 创建一个包含serv00账号信息的 JSON 文件，并将其内容添加到 GitHub 仓库的 Secrets 中。
 
