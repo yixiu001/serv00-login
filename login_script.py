@@ -60,7 +60,6 @@ async def login(username, password, panel):
 
     except Exception as e:
         print(f'{serviceName}账号 {username} 登录时出现错误: {e}')
-        
         return False
 
     finally:
@@ -68,9 +67,16 @@ async def login(username, password, panel):
             await page.close()
 
 async def main():
-    async with aiofiles.open('accounts.json', mode='r', encoding='utf-8') as f:
-        accounts_json = await f.read()
-    accounts = json.loads(accounts_json)
+    global message
+    message = 'serv00&ct8自动化脚本运行\n'
+
+    try:
+        async with aiofiles.open('accounts.json', mode='r', encoding='utf-8') as f:
+            accounts_json = await f.read()
+        accounts = json.loads(accounts_json)
+    except Exception as e:
+        print(f'读取 accounts.json 文件时出错: {e}')
+        return
 
     for account in accounts:
         username = account['username']
@@ -93,12 +99,11 @@ async def main():
         delay = random.randint(1000, 8000)
         await delay_time(delay)
         
-    message += '所有{serviceName}账号登录完成！'
-    send_telegram_message(message)
-    print('所有{serviceName}账号登录完成！')
+    message += f'所有{serviceName}账号登录完成！'
+    await send_telegram_message(message)
+    print(f'所有{serviceName}账号登录完成！')
 
-# 发送Telegram消息
-def send_telegram_message(message):
+async def send_telegram_message(message):
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         'chat_id': TELEGRAM_CHAT_ID,
@@ -117,9 +122,12 @@ def send_telegram_message(message):
     headers = {
         'Content-Type': 'application/json'
     }
-    response = requests.post(url, json=payload, headers=headers)
-    if response.status_code != 200:
-        print(f"发送消息到Telegram失败: {response.text}")
+    try:
+        response = requests.post(url, json=payload, headers=headers)
+        if response.status_code != 200:
+            print(f"发送消息到Telegram失败: {response.text}")
+    except Exception as e:
+        print(f"发送消息到Telegram时出错: {e}")
 
-# 运行主程序
-asyncio.get_event_loop().run_until_complete(main())
+if __name__ == '__main__':
+    asyncio.run(main())
