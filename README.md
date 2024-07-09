@@ -67,8 +67,9 @@
     - 示例值:
       ```json
       [
-        {"username": "serv00的账号", "password": "serv00的密码", "panelnum": "服务器号，比如s6.serv00.com的就是6"},
-        {"username": "user2", "password": "password2", "panelnum": 2}
+          {"username": "serv00的账号", "password": "serv00的密码", "panel": "s6.serv00.com"},
+          {"username": "ct8的账号", "password": "ct8的密码", "panel": "panel.ct8.pl"},
+          {"username": "user2", "password": "password2", "panel": "panel.ct8.pl"}
       ]
       ```
     - 获取方法: 创建一个包含serv00账号信息的 JSON 文件，并将其内容添加到 GitHub 仓库的 Secrets 中。
