@@ -74,6 +74,13 @@
       ```
     - 获取方法: 创建一个包含serv00账号信息的 JSON 文件，并将其内容添加到 GitHub 仓库的 Secrets 中。
 
+- **PUSH_PLUS_TOKEN**
+
+    - 作用：支持将消息推送到pushplus微信公众号。
+    - 示例值：`dad8515EFghijklmnopQRSTuvwxyZ444e3bb81f05`
+    - 获取方法：关注pushplus微信公众号获取。参考文档 `https://www.pushplus.plus/doc/`。
+
+
 ### 注意事项
 
 - **保密性**: Secrets 是敏感信息，请确保不要将它们泄露到公共代码库或未授权的人员。
