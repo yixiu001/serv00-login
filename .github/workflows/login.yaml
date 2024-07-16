@@ -3,7 +3,7 @@ name: Run Login Script
 on:
   workflow_dispatch:
   schedule:
-    - cron: "0 0 */3 * *"  # 每三天运行一次，可以根据需求调整时间
+    - cron: "27 6 */55 * *"  # 每55天运行一次，可以根据需求调整时间
   push:
     branches:
       - main
@@ -33,8 +33,7 @@ jobs:
 
       - name: 运行登录脚本
         env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
           ACCOUNTS_JSON: ${{ secrets.ACCOUNTS_JSON }}
         run: |
           python login_script.py
