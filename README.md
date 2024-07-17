@@ -1,5 +1,8 @@
 ## serv00与ct8自动化批量保号，每3天自动登录一次面板，并且发送消息到Telegram
 
+## 视频教程看这里
+[免费白嫖10年VPS服务器serv00 并且一键部署自己的专属自建Vless节点 ｜小白教程｜自动化批量保号](https://youtu.be/QnlzpvDl_mo)
+
 利用github Action以及python脚本实现
 
 🙏🙏🙏点个Star！！Star！！Star！！
@@ -87,3 +90,6 @@
 - **更新和删除**: 如果需要更新或删除 Secrets，可以通过仓库的 Secrets 页面进行管理。
 
 通过以上步骤，你就可以成功将代码 fork 到你的仓库下并运行它了。如果需要进一步的帮助或有其他问题，请随时告知！
+
+## 🌟🌟🌟Star！！！走起
+[![Stargazers over time](https://starchart.cc/yixiu001/serv00-login.svg?variant=adaptive)](https://starchart.cc/yixiu001/serv00-login)
