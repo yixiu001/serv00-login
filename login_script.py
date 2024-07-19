@@ -132,9 +132,9 @@ def send_push_plus_message(message):
     try:
         response = requests.post(url, json=payload, headers=headers)
         if response.status_code != 200:
-            print(f"发送消息到Telegram失败: {response.text}")
+            print(f"发送消息到PushPlus失败: {response.text}")
     except Exception as e:
-        print(f"发送消息到Telegram时出错: {e}")
+        print(f"发送消息到PushPlus时出错: {e}")
 
 
 def send_telegram_message(message):
