@@ -22,6 +22,8 @@ browser = None
 
 # telegram消息
 message = 'serv00&ct8自动化脚本运行\n'
+success_msg = ''
+failed_msg = ''
 
 async def login(username, password, panel):
     global browser
@@ -67,6 +69,8 @@ async def login(username, password, panel):
             await page.close()
 
 async def main():
+    global success_msg
+    global failed_msg
     global message
     message = 'serv00&ct8自动化脚本运行\n'
 
@@ -90,16 +94,19 @@ async def main():
             now_utc = format_to_iso(datetime.utcnow())
             now_beijing = format_to_iso(datetime.utcnow() + timedelta(hours=8))
             success_message = f'{serviceName}账号 {username} 于北京时间 {now_beijing}（UTC时间 {now_utc}）登录成功！'
-            message += success_message + '\n'
+            success_msg += serviceName + '-' + username + '、'
             print(success_message)
         else:
-            message += f'{serviceName}账号 {username} 登录失败，请检查{serviceName}账号和密码是否正确。\n'
+            failed_msg += serviceName + '-' + username + '、'
             print(f'{serviceName}账号 {username} 登录失败，请检查{serviceName}账号和密码是否正确。')
 
         delay = random.randint(1000, 8000)
         await delay_time(delay)
-        
-    message += f'所有{serviceName}账号登录完成！'
+    if success_msg:
+        message += '账号登录成功：\n' + success_msg[:-1] + '\n'
+    if failed_msg:
+        message += '账号登录失败：\n' + failed_msg[:-1] + '\n'
+    message += f'所有账号于北京时间 {now_beijing}（UTC时间 {now_utc}）登录完成！'
     await send_telegram_message(message)
     print(f'所有{serviceName}账号登录完成！')
 
