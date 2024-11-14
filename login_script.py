@@ -21,7 +21,7 @@ async def delay_time(ms):
 browser = None
 
 # telegram消息
-message = 'serv00&ct8自动化脚本运行\n'
+message = ""
 
 async def login(username, password, panel):
     global browser
@@ -65,10 +65,15 @@ async def login(username, password, panel):
     finally:
         if page:
             await page.close()
+# 显式的浏览器关闭函数
+async def shutdown_browser():
+    global browser
+    if browser:
+        await browser.close()
+        browser = None
 
 async def main():
     global message
-    message = 'serv00&ct8自动化脚本运行\n'
 
     try:
         async with aiofiles.open('accounts.json', mode='r', encoding='utf-8') as f:
@@ -86,34 +91,49 @@ async def main():
         serviceName = 'ct8' if 'ct8' in panel else 'serv00'
         is_logged_in = await login(username, password, panel)
 
+        now_beijing = format_to_iso(datetime.utcnow() + timedelta(hours=8))
         if is_logged_in:
-            now_utc = format_to_iso(datetime.utcnow())
-            now_beijing = format_to_iso(datetime.utcnow() + timedelta(hours=8))
-            success_message = f'{serviceName}账号 {username} 于北京时间 {now_beijing}（UTC时间 {now_utc}）登录成功！'
-            message += success_message + '\n'
-            print(success_message)
+            message += f"✅*{serviceName}*账号 *{username}* 于北京时间 {now_beijing}登录面板成功！\n\n"
+            print(f"{serviceName}账号 {username} 于北京时间 {now_beijing}登录面板成功！")
         else:
-            message += f'{serviceName}账号 {username} 登录失败，请检查{serviceName}账号和密码是否正确。\n'
-            print(f'{serviceName}账号 {username} 登录失败，请检查{serviceName}账号和密码是否正确。')
+            message += f"❌*{serviceName}*账号 *{username}* 于北京时间 {now_beijing}登录失败\n\n❗请检查*{username}*账号和密码是否正确。\n\n"
+            print(f"{serviceName}账号 {username} 登录失败，请检查{serviceName}账号和密码是否正确。")
 
         delay = random.randint(1000, 8000)
         await delay_time(delay)
         
-    message += f'所有{serviceName}账号登录完成！'
+    message += f"🔚脚本结束，如有异常点击下方按钮👇"
     await send_telegram_message(message)
     print(f'所有{serviceName}账号登录完成！')
+    # 退出时关闭浏览器
+    await shutdown_browser()
 
 async def send_telegram_message(message):
+    # 使用 Markdown 格式
+    formatted_message = f"""
+*🎯 serv00&ct8自动化保号脚本运行报告*
+
+🕰 *北京时间*: {format_to_iso(datetime.utcnow() + timedelta(hours=8))}
+
+⏰ *UTC时间*: {format_to_iso(datetime.utcnow())}
+
+📝 *任务报告*:
+
+{message}
+
+    """
+
     url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
     payload = {
         'chat_id': TELEGRAM_CHAT_ID,
-        'text': message,
+        'text': formatted_message,
+        'parse_mode': 'Markdown',  # 使用 Markdown 格式
         'reply_markup': {
             'inline_keyboard': [
                 [
                     {
                         'text': '问题反馈❓',
-                        'url': 'https://t.me/yxjsjl'
+                        'url': 'https://t.me/yxjsjl'  # 点击按钮后跳转到问题反馈的链接
                     }
                 ]
             ]
@@ -122,6 +142,7 @@ async def send_telegram_message(message):
     headers = {
         'Content-Type': 'application/json'
     }
+
     try:
         response = requests.post(url, json=payload, headers=headers)
         if response.status_code != 200:
